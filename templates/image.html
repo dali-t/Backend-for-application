@@ -1,0 +1,58 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+<h3 class="mt-4">Image Details</h3>
+<a href="/">Go back</a>
+<ul>
+    <li>Image ID - {{ image.image_id }}</li>
+    <li>Caption - {{ image.caption }}</li>
+    <li>Image Link - {{ image.image_link }}</li>
+    <li>Author User - {{ image.author_email }}</li>  {# Assuming 'author_email' represents the user's email #}
+    <li>Created At - {{ image.created_at }}</li>
+</ul>
+
+<h4 class="mt-4">Comments</h4>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.comment_text }} - by {{ comment.author_email }} on {{ comment.created_at }}</li>
+        {% endfor %}
+    </ul>
+
+<h4 class="mt-4">Add Comment</h4>
+<form method="POST" action="/images/{{ image.image_id }}/comments">
+    <div class="mb-3">
+        <label for="comment_text" class="form-label">Your Comment:</label>
+        <textarea class="form-control" id="comment_text" name="comment_text" rows="4" required placeholder="Enter your comment"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Post Comment</button>
+</form>
+
+<h4 class="mt-4">Reactions</h4>
+<form id="reactionForm" method="POST" action="/images/{{ image.image_id }}/reactions">
+    <div class="mb-3">
+        <label class="form-label">React to this image:</label><br>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="like" name="reaction_types[]" value="like">
+            <label class="form-check-label" for="like">Like(<span id="like_count">{{ reaction_counts.likes }}</span>)</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="laugh" name="reaction_types[]" value="laugh">
+            <label class="form-check-label" for="laugh">Laugh(<span id="laugh_count">{{ reaction_counts.laughs }}</span>)</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="shock" name="reaction_types[]" value="shock">
+            <label class="form-check-label" for="shock">Shock (<span id="shock_count">{{ reaction_counts.shocks }}</span>)</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="cry" name="reaction_types[]" value="cry">
+            <label class="form-check-label" for="cry">Cry (<span id="cry_count">{{ reaction_counts.cry }}</span>)</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="heart" name="reaction_types[]" value="heart">
+            <label class="form-check-label" for="heart">Heart (<span id="heart_count">{{ reaction_counts.heart }}</span>)</label>
+        </div>
+    </div>
+    <button id="reactButton" type="button" class="btn btn-primary">React</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+<h3 class="mt-4">Images!</h3>
+<a href="/images/new">Create Image</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image ID</th>
+            <th>Created At</th>
+            <th>User Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for image in images %}
+        <tr>
+            <td><a href="/images/{{ image.image_id }}">{{ image.image_id }}</a></td>
+            <td>{{ image.created_at }}</td>
+            <td>{{ image.author_email }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

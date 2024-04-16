@@ -1,0 +1,27 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+<h3 class="mt-4">New Image</h3>
+<a href="/">Go back</a>
+<form method="POST" action="/images">
+    <div class="mb-3">
+        <label for="caption" class="from-label">Caption</label>
+        <input type= "text" class="form-control" id="caption" name="caption" required placeholder="Enter Caption">
+    </div>
+    <div class="mb-3">
+        <label for="image_link" class="form-label">Image Link</label>
+        <input type= "text" class="form-control" id="image_link" name="image_link" required placeholder="Enter Image Link">
+    </div>
+    <div class="mb-3">
+        <label for="author_email" class="from-label">User</label>
+        <select class="form-select" id="author_email" name="author_email" required placeholder="Enter User Email">
+            <option value="" selected disabled>Select User</option>
+            {% for user in users %}
+                <option value="{{ user.email }}">{{ user.email }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type ="submit" class="btn btn-primary">Create</button>
+</form>
+
+{% endblock %}
